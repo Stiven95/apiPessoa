@@ -12,18 +12,20 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
+@RequestMapping("/api")
 public class PessoaController {
 
     @Autowired
     private PessoaService pessoaService;
 
-    @RequestMapping(value = "/pessoa", method = RequestMethod.GET)
+    @GetMapping("/pessoa")
     public List<Pessoa> getPessoa(){
         return pessoaService.findAll();
     }
 
-    @RequestMapping(value = "/pessoa/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/pessoa/{id}")
     public ResponseEntity<Pessoa> getPessoaById(@PathVariable(value = "id") long id) throws APIException {
         Optional<Pessoa> pessoa = Optional.ofNullable(pessoaService.findById(id));
         if(pessoa.isPresent())
@@ -32,12 +34,12 @@ public class PessoaController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @RequestMapping(value = "/pessoa", method =  RequestMethod.POST)
+    @PostMapping(value = "/pessoa")
     public void insertPessoa(@Valid @RequestBody Pessoa pessoa) {
         pessoaService.salvarPessoa(pessoa);
     }
 
-    @RequestMapping(value = "/pessoa/{id}", method =  RequestMethod.PUT)
+    @PutMapping(value = "/pessoa/{id}")
     public ResponseEntity<Pessoa> updatePessoa(@PathVariable(value = "id") long id, @Valid @RequestBody Pessoa newPessoa) throws APIException {
         Optional<Pessoa> oldPessoa = Optional.ofNullable(pessoaService.findById(id));
         if(oldPessoa.isPresent()){
@@ -50,7 +52,7 @@ public class PessoaController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @RequestMapping(value = "/pessoa/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/pessoa/{id}")
     public ResponseEntity<Object> deletePessoa(@PathVariable(value = "id") long id) throws APIException {
         Optional<Pessoa> pessoa = Optional.ofNullable(pessoaService.findById(id));
         if(pessoa.isPresent()){
