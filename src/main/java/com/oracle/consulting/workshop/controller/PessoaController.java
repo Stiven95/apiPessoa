@@ -55,11 +55,10 @@ public class PessoaController {
     @DeleteMapping(value = "/pessoa/{id}")
     public ResponseEntity<Object> deletePessoa(@PathVariable(value = "id") long id) throws APIException {
         Optional<Pessoa> pessoa = Optional.ofNullable(pessoaService.findById(id));
-        if(pessoa.isPresent()){
+        if (pessoa.isPresent()) {
             pessoaService.deletarPessoa(pessoa.get());
             return new ResponseEntity<>(HttpStatus.OK);
-        }
-        else
+        } else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

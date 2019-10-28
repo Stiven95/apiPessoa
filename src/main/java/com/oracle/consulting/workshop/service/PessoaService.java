@@ -30,4 +30,8 @@ public class PessoaService {
     public void deletarPessoa(Pessoa pessoa) {
         pessoaRepository.deleteById(pessoa.getId());
     }
+
+    public List<Pessoa> findByNome(final String nome) {
+        return pessoaRepository.findByNome(nome);
+    }
 }
